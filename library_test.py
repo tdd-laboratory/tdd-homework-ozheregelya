@@ -29,7 +29,48 @@ class TestCase(unittest.TestCase):
     # Third unit test; prove that if we look for integers where there are none, we get no results.
     def test_no_integers(self):
         self.assert_extract("no integers", library.integers)
+    
+    def test_date(self):
+        self.assert_extract('I was born on 2015-07-25.', library.dates_iso8601, '2015-07-25')
 
+    def test_invalid_month(self):
+        self.assert_extract('I was born on 2015-13-25.', library.dates_iso8601)
+
+    def test_dates_fmt2(self):
+        self.assert_extract('I was born on 25 Jan 2017.', library.dates_fmt2, '25 Jan 2017')
+#1
+    def test_date_time_full(self):
+        self.assert_extract('Today is 2015-07-25 18:22:19.123.', library.dates_iso8601, '2015-07-25 18:22:19.123')
+#2 
+    def test_date_time_delimeter(self):
+        self.assert_extract('Today is 2015-07-25T18:22:19.123.', library.dates_iso8601, '2015-07-25T18:22:19.123')
+#3
+    def test_date_time_no_msec(self):
+        self.assert_extract('Today is 2015-07-25 18:22:19.', library.dates_iso8601, '2015-07-25 18:22:19')
+#4
+    def test_date_time_no_sec(self):
+        self.assert_extract('Today is 2015-07-25 18:22:19.', library.dates_iso8601, '2015-07-25 18:22')
+#5
+    def test_date_time_no_min(self):
+        self.assert_extract('Today is 2015-07-25 18:22.', library.dates_iso8601, '2015-07-25 18:22')
+#6
+    def test_date_time_timezone_long(self):
+        self.assert_extract('Today is 2015-07-25T18:22:19.123MDT.', library.dates_iso8601, '2015-07-25 18:22:19.123MDT')
+#7
+    def test_date_time_timezone_short(self):
+        self.assert_extract('Today is 2015-07-25 18:22:19Z.', library.dates_iso8601, '2015-07-25 18:22:19Z')
+#8
+    def test_date_time_timezone_negative_offset(self):
+        self.assert_extract('Today is 2015-07-25 18:22:19.123-0800.', library.dates_iso8601, '2015-07-25 18:22:123-0800')
+#8
+    def test_date_time_timezone_positive_offset(self):
+        self.assert_extract('Today is 2015-07-25 18:22+0200.', library.dates_iso8601, '2015-07-25 18:22-0800')
+#9
+    def test_date_time_not_a_timezone(self):
+        self.assert_extract('Today is 2015-07-25 18:22:19QWERTY.', library.dates_iso8601, '2015-07-25 18:22:19')
+#10
+    def test_dates_fmt2_comma(self):
+        self.assert_extract('I was born on 25 Jan, 2017.', library.dates_fmt2, '25 Jan, 2017')
 
 if __name__ == '__main__':
     unittest.main()
