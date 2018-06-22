@@ -24,7 +24,7 @@ class TestCase(unittest.TestCase):
 
     # Second unit test; prove that if we look for integers, we find four of them.
     def test_integers(self):
-        self.assert_extract(NUM_CORPUS, library.integers, '1845', '15', '20', '80')
+        self.assert_extract(NUM_CORPUS, library.integers, '1845', '15', '20', '80', '120,000,000')
 
     # Third unit test; prove that if we look for integers where there are none, we get no results.
     def test_no_integers(self):
@@ -71,8 +71,6 @@ class TestCase(unittest.TestCase):
 #10
     def test_dates_fmt2_comma(self):
         self.assert_extract('I was born on 25 Jan, 2017.', library.dates_fmt2, '25 Jan, 2017')
-#11
-    def test_comma_separated_integers(self):
-        self.assert_extract(NUM_CORPUS, library.integers, '1845', '15', '20', '80')
+
 if __name__ == '__main__':
     unittest.main()
