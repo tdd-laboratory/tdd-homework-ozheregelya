@@ -7,7 +7,7 @@ began in 1845 (the twenty-second anniversary of the Mexican Revolution), and
 is the 1st example of a national independence holiday becoming popular in the
 Western Hemisphere. (The Fourth of July didn't see regular celebration in the
 US until 15-20 years later.) It is celebrated by 77.9% of the population--
-trending toward 80.                                                                
+trending toward 80. Population of Mexica is over 120,000,000.                                                                 
 '''
 
 class TestCase(unittest.TestCase):
@@ -71,6 +71,8 @@ class TestCase(unittest.TestCase):
 #10
     def test_dates_fmt2_comma(self):
         self.assert_extract('I was born on 25 Jan, 2017.', library.dates_fmt2, '25 Jan, 2017')
-
+#11
+    def test_comma_separated_integers(self):
+        self.assert_extract(NUM_CORPUS, library.integers, '1845', '15', '20', '80')
 if __name__ == '__main__':
     unittest.main()
